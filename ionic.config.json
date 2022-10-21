@@ -1,0 +1,7 @@
+{
+  "name": "qualidade-ar",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
