@@ -1,12 +1,13 @@
 <ion-content>
   <div class="container">
-    <header class="cabecalho">
+    <header class="cabecalho padding-1em">
       <input type="text" class="cabecalho-input" placeholder="Digite o nome da sua cidade"
         (change)="buscarCidade($event)">
 
       <div class="cabecalho__informacoes-fonte" #backgroundColorCabecalho>
         <div class="informacoes-instituto">
-          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal()"> {{ qualidadeAr.nomeInstituto }}</h3>
+          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal()"> {{ qualidadeAr.nomeInstituto
+            }}</h3>
           <a class="informacoes-instituto-link" [href]="qualidadeAr.fonte" target="_blank"> Visitar site</a>
         </div>
 
@@ -19,10 +20,9 @@
           <h2 class="informacoes__situacao-qualidade-ar-cidade"> {{ qualidadeAr.cidade }}</h2>
         </div>
       </div>
-
     </header>
 
-    <div class="qualidade-ar__container">
+    <div class="qualidade-ar__container padding-1em">
       <div class="qualidade-ar__informacoes-container">
         <div class="informacoes-container__conteudo">
           <label class="qualidade-ar__indice-label"> Indice de qualidade de ar </label>

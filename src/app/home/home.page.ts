@@ -22,7 +22,13 @@ export class HomePage {
   ) { }
 
   ngOnInit(): void {
-    this.buscarCidade('São Paulo');
+    this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.split('-')[0].replace(' ', '')
+    this.qualidadeAr.dataUltimaAtualizacao = this.qualidadeAr.dataUltimaAtualizacao.split(' ')[1];
+    this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.length > 15 ? this.qualidadeAr.nomeInstituto.substr(0, 15).concat('...') : this.qualidadeAr.nomeInstituto;
+    Object.keys(this.qualidadeAr.particulasAr).forEach((nome) => this.particulas.push({ nome: nome.toUpperCase(), valor: 0 }));
+    Object.entries(this.qualidadeAr.particulasAr).forEach((valor, index) => this.particulas[index].valor = valor[1].v);
+    setTimeout(() => this.verificarQualidadeAr(51));
+    // this.buscarCidade('São Paulo');
   }
 
   buscarCidade(event: any | string) {
