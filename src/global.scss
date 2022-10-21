@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -39,9 +39,15 @@ h2,
 h3,
 a,
 span,
+ul,
+li,
 label {
     margin: 0;
     padding: 0;
+}
+
+ul {
+    list-style: none;
 }
 
 .padding-1em {
