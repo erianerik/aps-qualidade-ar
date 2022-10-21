@@ -10,6 +10,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'mapa-qualidade-ar',
+    loadChildren: () => import('./page/mapa-qualidade-ar/mapa-qualidade-ar.module').then( m => m.MapaQualidadeArPageModule)
   }
 ];
 
