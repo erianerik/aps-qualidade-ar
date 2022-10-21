@@ -7,6 +7,11 @@ import { Subject } from 'rxjs';
 export class BroadcastService {
 
   public static loadingSubject = new Subject<boolean>();
+  public static qualidadeArSubject = new Subject<any>();
+  public static geolocalizacao = {
+    latitude: 0,
+    longitude: 0,
+  };
 
   constructor() { }
 
@@ -16,6 +21,10 @@ export class BroadcastService {
 
   static exibirLoading() {
     this.loadingSubject.next(true);
+  }
+
+  static salvarGeolocalizacao(latitude: number, longitude: number) {
+    this.qualidadeArSubject.next({ latitude, longitude });
   }
 
 }
