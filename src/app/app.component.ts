@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BroadcastService } from './home/service/broadcast/broadcast.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+  exibirLoading: boolean = false;
+
+  constructor() {
+    BroadcastService.loadingSubject.subscribe((statusLoading: boolean) => this.exibirLoading = statusLoading);
+  }
 }

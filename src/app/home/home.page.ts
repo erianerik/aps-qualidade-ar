@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Particulas } from '../model/particulas';
 import { QualidadeAr } from '../model/qualidade-ar';
+import { BroadcastService } from './service/broadcast/broadcast.service';
 import { QualidadeArServiceService } from './service/qualidade-ar-service/qualidade-ar-service.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class HomePage {
   ) { }
 
   ngOnInit(): void {
+    BroadcastService.exibirLoading();
     this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.split('-')[0].replace(' ', '')
     this.qualidadeAr.dataUltimaAtualizacao = this.qualidadeAr.dataUltimaAtualizacao.split(' ')[1];
     this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.length > 15 ? this.qualidadeAr.nomeInstituto.substr(0, 15).concat('...') : this.qualidadeAr.nomeInstituto;
@@ -32,8 +34,9 @@ export class HomePage {
   }
 
   buscarCidade(event: any | string) {
+    BroadcastService.exibirLoading();
     const cidade = event?.target?.value ? event.target.value : event;
-    this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => this.valorizarQualidadeAr(result.data));
+    this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => this.valorizarQualidadeAr(result.data), BroadcastService.ocultarLoading);
   }
 
   valorizarQualidadeAr(dadosQualidade: any) {
@@ -86,6 +89,8 @@ export class HomePage {
     this.qualidadeAr.situacaoQualidadeAr = textoQualidadeAr;
     this.input.nativeElement.style.backgroundColor = qualidadeArCor;
     setTimeout(() => document.querySelectorAll('.qualidade-cor').forEach((element: any) => element.style.color = qualidadeArCor));
+    setTimeout(() => BroadcastService.ocultarLoading());
+
   }
 
   async exibirNomeModal() {
