@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BroadcastService } from './home/service/broadcast/broadcast.service';
+import { BroadcastService } from './service/broadcast/broadcast.service';
 
 @Component({
   selector: 'app-root',

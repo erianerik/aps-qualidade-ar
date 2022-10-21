@@ -2,8 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Particulas } from '../model/particulas';
 import { QualidadeAr } from '../model/qualidade-ar';
-import { BroadcastService } from './service/broadcast/broadcast.service';
-import { QualidadeArServiceService } from './service/qualidade-ar-service/qualidade-ar-service.service';
+import { BroadcastService } from '../service/broadcast/broadcast.service';
+import { QualidadeArServiceService } from '../service/qualidade-ar-service/qualidade-ar-service.service';
 
 @Component({
   selector: 'app-home',
