@@ -1,20 +1,57 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="container">
+    <header class="cabecalho">
+      <input type="text" class="cabecalho-input" placeholder="Digite o nome da sua cidade"
+        (change)="buscarCidade($event)">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <div class="cabecalho__informacoes-fonte" #backgroundColorCabecalho>
+        <div class="informacoes-instituto">
+          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal()"> {{ qualidadeAr.nomeInstituto }}</h3>
+          <a class="informacoes-instituto-link" [href]="qualidadeAr.fonte" target="_blank"> Visitar site</a>
+        </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <div class="cabecalho__informacoes-importante">
+          <div class="informacoes-importante__container">
+            <span>Qualidade do ar</span>
+            <h2 class="informacoes-fonte__titulo">{{ qualidadeAr.situacaoQualidadeAr }}</h2>
+          </div>
+
+          <h2 class="informacoes__situacao-qualidade-ar-cidade"> {{ qualidadeAr.cidade }}</h2>
+        </div>
+      </div>
+
+    </header>
+
+    <div class="qualidade-ar__container">
+      <div class="qualidade-ar__informacoes-container">
+        <div class="informacoes-container__conteudo">
+          <label class="qualidade-ar__indice-label"> Indice de qualidade de ar </label>
+          <h2 class="qualidade-ar__indice qualidade-cor">{{ qualidadeAr.indiceQualidadeAr }}</h2>
+        </div>
+
+        <div class="informacoes-container__data-atualizacao-container">
+          <label class="qualidade-ar__data-atualizacao-label">Ultima Atualização</label>
+          <span class="qualidade-ar__data-atualizacao">{{ qualidadeAr.dataUltimaAtualizacao }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalhe__qualidade-ar">
+      <h2 class="detalhe__titulo">Detalhes do ar</h2>
+
+      <div class="detalhe__container">
+        <div class="detalhe__card" *ngFor="let particula of particulas">
+          <header class="detalhe__card__header">
+            <h3 class="card__titulo titulo--preto">{{particula.nome}}</h3>
+            <span class="card__subtitulo">Particula</span>
+          </header>
+
+          <div>
+            <h3 class="card__titulo titulo--indice qualidade-cor">{{particula.valor}}</h3>
+            <span class="card__subtitulo">% do tipo</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>
