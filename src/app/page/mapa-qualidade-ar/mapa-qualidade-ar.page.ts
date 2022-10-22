@@ -11,32 +11,25 @@ declare var google: any;
 })
 export class MapaQualidadeArPage implements OnInit {
 
-  geo: any = {
-    latitude: 0,
-    longitude: 0,
-  };
-
+  geo: any;
   map: any;
 
   constructor(
     private _qualidadeArService: QualidadeArServiceService,
-  ) {
-
-    BroadcastService.qualidadeArSubject.subscribe((result) => {
-      this.geo = result;
-      this.carregarMapa(result.latitude, result.longitude);
-    });
-  }
+  ) { }
 
   ngOnInit() {
-    this.buscarCidade();
+    this.carregarMapa();
   }
 
-  carregarMapa(latitude: number, longitude: number) {
+  carregarMapa() {
+    this.geo = BroadcastService.geolocalizacao;
+    if (this.geo.latitude === 0 && this.geo.longitude === 0) { this.buscarCidade() };
+
     this.map = new google.maps.Map(document.getElementById('map'), {
-      center: new google.maps.LatLng(latitude, longitude),
+      center: new google.maps.LatLng(this.geo.latitude, this.geo.longitude),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoom: 15
+      zoom: 11
     });
 
     let waqiMapOverlay = new google.maps.ImageMapType({
@@ -47,6 +40,7 @@ export class MapaQualidadeArPage implements OnInit {
     });
 
     this.map.overlayMapTypes.insertAt(0, waqiMapOverlay);
+
   }
 
   eventoBlur(event: any) {
@@ -55,13 +49,10 @@ export class MapaQualidadeArPage implements OnInit {
 
   buscarCidade() {
     BroadcastService.exibirLoading();
-    if (this.geo.latitude === 0 && this.geo.longitude === 0) {
-      this._qualidadeArService.buscarDadosQualidadeAr('São Paulo').subscribe((result) => {
-        this.carregarMapa(result.data.city.geo[0], result.data.city.geo[1]);
-        BroadcastService.ocultarLoading();
-      });
-    }
-
-    this.carregarMapa(BroadcastService.geolocalizacao.latitude, BroadcastService.geolocalizacao.longitude);
+    this._qualidadeArService.buscarDadosQualidadeAr('São Paulo').subscribe((result) => {
+      this.geo.latitude = result.data.city.geo[0];
+      this.geo.longitude = result.data.city.geo[1];
+      BroadcastService.ocultarLoading();
+    });
   }
 }

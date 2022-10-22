@@ -24,7 +24,8 @@ export class BroadcastService {
   }
 
   static salvarGeolocalizacao(latitude: number, longitude: number) {
-    this.qualidadeArSubject.next({ latitude, longitude });
+    this.geolocalizacao.latitude = latitude;
+    this.geolocalizacao.longitude = longitude;
   }
 
 }
