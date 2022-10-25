@@ -1,0 +1,24 @@
+<ion-content>
+  <div class="container">
+    <header class="cabecalho padding-1em">
+      <h1 class="cabecalho-titulo">Particulas</h1>
+      <p class="cabecalho-subtitulo">Conheça algumas particulas apresentadas nos detalhes da qualidade do ar</p>
+    </header>
+
+    <div>
+      <ion-card *ngFor="let card of cardInformacacoes">
+        <ion-card-header>
+          <ion-card-title>{{ card.titulo }}</ion-card-title>
+          <ion-card-subtitle>{{ card.subtitulo }}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          {{ card.descricao }}
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <h3 class="informacoes-fonte padding-1em">Fonte: <a href="https://cetesb.sp.gov.br/ar/poluentes/"
+        target="_blank">CETESB</a></h3>
+  </div>
+</ion-content>

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BroadcastService } from './service/broadcast/broadcast.service';
 
 @Component({
@@ -6,11 +7,17 @@ import { BroadcastService } from './service/broadcast/broadcast.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   exibirLoading: boolean = false;
 
-  constructor() {
+  constructor(
+    private _router: Router
+  ) {
     BroadcastService.loadingSubject.subscribe((statusLoading: boolean) => this.exibirLoading = statusLoading);
   }
+  ngOnInit(): void {
+    this._router.navigate(['/home']);
+  }
+
 }
