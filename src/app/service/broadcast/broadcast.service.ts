@@ -28,4 +28,8 @@ export class BroadcastService {
     this.geolocalizacao.longitude = longitude;
   }
 
+  static atualizarDadosQualidadeAr(resultadoBuscaCidade: any) {
+    this.qualidadeArSubject.next(resultadoBuscaCidade);
+  }
+
 }

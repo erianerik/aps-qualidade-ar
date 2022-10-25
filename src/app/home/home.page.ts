@@ -23,7 +23,11 @@ export class HomePage {
   constructor(
     private _qualidadeArService: QualidadeArServiceService,
     private alertController: AlertController
-  ) { }
+  ) {
+    BroadcastService.qualidadeArSubject.subscribe((qualidadeAr: any) => {
+      this.valorizarQualidadeAr(qualidadeAr);
+    });
+  }
 
   ngOnInit(): void {
     this.buscarCidade('São Paulo');
@@ -39,7 +43,7 @@ export class HomePage {
         return;
       }
       this.valorizarQualidadeAr(result.data)
-      BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1])
+      BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1]);
     });
   }
 

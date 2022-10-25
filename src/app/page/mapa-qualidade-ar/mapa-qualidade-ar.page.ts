@@ -24,7 +24,6 @@ export class MapaQualidadeArPage implements OnInit {
 
   carregarMapa() {
     this.geo = BroadcastService.geolocalizacao;
-    if (this.geo.latitude === 0 && this.geo.longitude === 0) { this.buscarCidade() };
 
     this.map = new google.maps.Map(document.getElementById('map'), {
       center: new google.maps.LatLng(this.geo.latitude, this.geo.longitude),
@@ -47,12 +46,19 @@ export class MapaQualidadeArPage implements OnInit {
     event.preventDefault();
   }
 
-  buscarCidade() {
+  buscarCidade(event: any | string) {
     BroadcastService.exibirLoading();
-    this._qualidadeArService.buscarDadosQualidadeAr('São Paulo').subscribe((result) => {
-      this.geo.latitude = result.data.city.geo[0];
-      this.geo.longitude = result.data.city.geo[1];
+    const cidade = event?.target?.value ? event.target.value : event;
+    this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => {
+      if (result.status === 'error') {
+        setTimeout(() => BroadcastService.ocultarLoading());
+        return;
+      }
+      BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1]);
+      BroadcastService.atualizarDadosQualidadeAr(result.data);
+      this.carregarMapa();
       BroadcastService.ocultarLoading();
     });
   }
+
 }
