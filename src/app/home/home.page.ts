@@ -12,10 +12,13 @@ import { QualidadeArServiceService } from '../service/qualidade-ar-service/quali
 })
 export class HomePage {
   @ViewChild('backgroundColorCabecalho') input;
+  @ViewChild('popover') popover;
 
   qualidadeAr = new QualidadeAr();
   particulas: Particulas[] = [];
   textoQualidadeAr: string = '';
+  cidadeNaoEncontrada = false;
+  isOpen = false;
 
   constructor(
     private _qualidadeArService: QualidadeArServiceService,
@@ -23,13 +26,6 @@ export class HomePage {
   ) { }
 
   ngOnInit(): void {
-    // BroadcastService.exibirLoading();
-    // this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.split('-')[0].replace(' ', '')
-    // this.qualidadeAr.dataUltimaAtualizacao = this.qualidadeAr.dataUltimaAtualizacao.split(' ')[1];
-    // this.qualidadeAr.nomeInstituto = this.qualidadeAr.nomeInstituto.length > 15 ? this.qualidadeAr.nomeInstituto.substr(0, 15).concat('...') : this.qualidadeAr.nomeInstituto;
-    // Object.keys(this.qualidadeAr.particulasAr).forEach((nome) => this.particulas.push({ nome: nome.toUpperCase(), valor: 0 }));
-    // Object.entries(this.qualidadeAr.particulasAr).forEach((valor, index) => this.particulas[index].valor = valor[1].v);
-    // setTimeout(() => this.verificarQualidadeAr(51));
     this.buscarCidade('São Paulo');
   }
 
@@ -37,8 +33,12 @@ export class HomePage {
     BroadcastService.exibirLoading();
     const cidade = event?.target?.value ? event.target.value : event;
     this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => {
+      if (result.status === 'error') {
+        setTimeout(() => BroadcastService.ocultarLoading());
+        this.cidadeNaoEncontrada = true;
+        return;
+      }
       this.valorizarQualidadeAr(result.data)
-      BroadcastService.ocultarLoading;
       BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1])
     });
   }
@@ -95,6 +95,11 @@ export class HomePage {
     setTimeout(() => document.querySelectorAll('.qualidade-cor').forEach((element: any) => element.style.color = qualidadeArCor));
     setTimeout(() => BroadcastService.ocultarLoading());
 
+  }
+
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isOpen = true;
   }
 
   async exibirNomeModal() {

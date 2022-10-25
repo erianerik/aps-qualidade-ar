@@ -33,11 +33,12 @@
 .menu {
     width: 100%;
     height: 3em;
-    background-color: #fff;
-    border-top: 2px solid #525252;
+    background-color: #fafafa;
     position: fixed;
     bottom: 0;
     left: 0;
+    border-radius: 1em 1em 0 0;
+    border-top: 1px solid #c4c4c4;
 }
 
 .menu__itens {
@@ -55,6 +56,6 @@
     align-items: center;
 
     ion-icon {
-        color: #525252;
+        color: #000;
     }
 }
