@@ -39,7 +39,7 @@ export class HomePage {
     this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => {
       if (result.status === 'error') {
         setTimeout(() => BroadcastService.ocultarLoading());
-        this.cidadeNaoEncontrada = true;
+        this.exibirNomeModal('Aviso', 'Cidade não encontrada');
         return;
       }
       this.valorizarQualidadeAr(result.data)
@@ -106,10 +106,10 @@ export class HomePage {
     this.isOpen = true;
   }
 
-  async exibirNomeModal() {
+  async exibirNomeModal(titulo: string, conteudo: string) {
     const modal = await this.alertController.create({
-      header: 'Instituto meteorologista',
-      message: this.qualidadeAr.nomeInstitutoCompleto,
+      header: titulo,
+      message: conteudo,
       buttons: ['fechar'],
     });
 

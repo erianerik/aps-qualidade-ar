@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { BroadcastService } from 'src/app/service/broadcast/broadcast.service';
 import { QualidadeArServiceService } from 'src/app/service/qualidade-ar-service/qualidade-ar-service.service';
 
@@ -16,6 +17,7 @@ export class MapaQualidadeArPage implements OnInit {
 
   constructor(
     private _qualidadeArService: QualidadeArServiceService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class MapaQualidadeArPage implements OnInit {
     this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => {
       if (result.status === 'error') {
         setTimeout(() => BroadcastService.ocultarLoading());
+        this.exibirNomeModal('Aviso', 'Cidade não encontrada');
         return;
       }
       BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1]);
@@ -59,6 +62,16 @@ export class MapaQualidadeArPage implements OnInit {
       this.carregarMapa();
       BroadcastService.ocultarLoading();
     });
+  }
+
+  async exibirNomeModal(titulo: string, conteudo: string) {
+    const modal = await this.alertController.create({
+      header: titulo,
+      message: conteudo,
+      buttons: ['fechar'],
+    });
+
+    await modal.present();
   }
 
 }

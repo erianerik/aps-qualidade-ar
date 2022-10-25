@@ -5,21 +5,16 @@
     <p class="cabecalho-subtitulo">Preencha o nome de uma cidade para obter informações da qualidade do ar</p>
   </header>
 
-  <ion-popover #popover [isOpen]="cidadeNaoEncontrada" alignment="center" (didDismiss)="cidadeNaoEncontrada = false">
-    <ng-template>
-      <ion-content class="ion-padding">Cidade não encontrada!</ion-content>
-    </ng-template>
-  </ion-popover>
-
   <div class="container">
     <header class="cabecalho padding-1em">
-      <ion-searchbar animated="true" class="input" placeholder="Ex.: Campinas"
-        (change)="buscarCidade($event)"></ion-searchbar>
+      <ion-searchbar animated="true" class="input" placeholder="Ex.: Campinas" (change)="buscarCidade($event)">
+      </ion-searchbar>
 
 
       <div class="cabecalho__informacoes-fonte" #backgroundColorCabecalho>
         <div class="informacoes-instituto">
-          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal()"> {{ qualidadeAr.nomeInstituto
+          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal('Nome instituo', qualidadeAr.nomeInstitutoCompleto)"> {{
+            qualidadeAr.nomeInstituto
             }}</h3>
           <a class="informacoes-instituto-link" [href]="qualidadeAr.fonte" target="_blank"> Visitar site</a>
         </div>
