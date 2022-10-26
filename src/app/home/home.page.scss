@@ -17,6 +17,11 @@
 }
 
 .informacoes-fonte__subtitulo-instituto {
+  display: inline-block;
+  width: 9em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-decoration: underline;
 }
 

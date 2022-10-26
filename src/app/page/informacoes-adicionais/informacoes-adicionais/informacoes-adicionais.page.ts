@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InformacoesAdicionaisPage implements OnInit {
 
+  ocultarDescricao = true;
+
   cardInformacacoes = [
     {
       titulo: 'CO',
@@ -34,5 +36,6 @@ export class InformacoesAdicionaisPage implements OnInit {
 
   ngOnInit() {
   }
+
 
 }

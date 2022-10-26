@@ -48,7 +48,6 @@ export class HomePage {
   }
 
   valorizarQualidadeAr(dadosQualidade: any) {
-    const maximoTamanhoString: number = 15;
     const nomeInstituto: string = dadosQualidade.attributions[0].name;
 
     this.particulas = [];
@@ -57,7 +56,7 @@ export class HomePage {
     this.qualidadeAr.fonte = dadosQualidade.attributions[0].url;
     this.qualidadeAr.indiceQualidadeAr = dadosQualidade.aqi;
     this.qualidadeAr.nomeInstitutoCompleto = nomeInstituto;
-    this.qualidadeAr.nomeInstituto = nomeInstituto.length > maximoTamanhoString ? nomeInstituto.substr(0, maximoTamanhoString).concat('...') : nomeInstituto;
+    this.qualidadeAr.nomeInstituto = nomeInstituto;
     this.qualidadeAr.dataUltimaAtualizacao = dadosQualidade.time.s.split(' ')[1];
     this.qualidadeAr.particulasAr = dadosQualidade.iaqi;
     Object.keys(this.qualidadeAr.particulasAr).forEach((nome) => this.particulas.push({ nome: nome.toUpperCase(), valor: 0 }));
@@ -98,7 +97,6 @@ export class HomePage {
     this.input.nativeElement.style.backgroundColor = qualidadeArCor;
     setTimeout(() => document.querySelectorAll('.qualidade-cor').forEach((element: any) => element.style.color = qualidadeArCor));
     setTimeout(() => BroadcastService.ocultarLoading());
-
   }
 
   presentPopover(e: Event) {

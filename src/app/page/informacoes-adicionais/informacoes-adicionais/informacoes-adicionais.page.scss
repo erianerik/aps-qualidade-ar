@@ -15,3 +15,16 @@ ion-card-subtitle {
     font-size: 1em;
     font-weight: 800;
 }
+
+.ocultar-texto {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.descricao__ler-mais {
+    color: #2FA0D5;
+    font-weight: 500;
+    text-decoration: underline;
+}

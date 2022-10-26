@@ -13,7 +13,8 @@
         </ion-card-header>
 
         <ion-card-content>
-          {{ card.descricao }}
+          <p class="card__descricao" [ngClass]="{'ocultar-texto' : ocultarDescricao}">{{ card.descricao }}</p>
+          <span (click)="ocultarDescricao = !ocultarDescricao" class="descricao__ler-mais">Ler mais</span>
         </ion-card-content>
       </ion-card>
     </div>
