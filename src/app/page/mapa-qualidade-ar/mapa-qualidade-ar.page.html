@@ -1,7 +1,9 @@
 <ion-content>
-  <div id='map' (blur)="eventoBlur($event)"> </div>
-  <div class="buscar-cidade-mapa">
-    <ion-searchbar animated="true" class="input" placeholder="Pesquisar cidade" (change)="buscarCidade($event)">
-    </ion-searchbar>
+  <div class="mapa-container" (click)="desfocarInputPesquisa($event)">
+    <div id='map' (blur)="eventoBlur($event)"> </div>
+    <div class="buscar-cidade-mapa">
+      <ion-searchbar animated="true" class="input" id="buscar-cidade-input" placeholder="Pesquisar cidade" (change)="buscarCidade($event)">
+      </ion-searchbar>
+    </div>
   </div>
 </ion-content>

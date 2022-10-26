@@ -74,4 +74,9 @@ export class MapaQualidadeArPage implements OnInit {
     await modal.present();
   }
 
+  desfocarInputPesquisa(event: any) {
+    let pesquisaInput: any = document.querySelector('.buscar-cidade-mapa .searchbar-input');
+    event.target !== pesquisaInput ? pesquisaInput.blur() : false;
+  }
+
 }
