@@ -11,7 +11,6 @@ declare var google: any;
   styleUrls: ['./mapa-qualidade-ar.page.scss'],
 })
 export class MapaQualidadeArPage implements OnInit {
-
   geo: any;
   map: any;
 

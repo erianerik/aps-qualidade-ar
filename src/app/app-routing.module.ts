@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'informacoes-adicionais',
-    loadChildren: () => import('./page/informacoes-adicionais/informacoes-adicionais/informacoes-adicionais.module').then(m => m.InformacoesAdicionaisPageModule)
+    loadChildren: () => import('./page/informacoes-adicionais/informacoes-adicionais.module').then(m => m.InformacoesAdicionaisPageModule)
   }
 ];
 

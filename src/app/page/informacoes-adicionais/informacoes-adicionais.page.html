@@ -14,7 +14,7 @@
 
         <ion-card-content>
           <p class="card__descricao" [ngClass]="{'ocultar-texto' : ocultarDescricao}">{{ card.descricao }}</p>
-          <span (click)="ocultarDescricao = !ocultarDescricao" class="descricao__ler-mais">Ler mais</span>
+          <span (click)="ocultarDescricao = !ocultarDescricao" class="descricao__ler-mais">{{ocultarDescricao ? 'Exibir' : 'Ocultar'}}</span>
         </ion-card-content>
       </ion-card>
     </div>
