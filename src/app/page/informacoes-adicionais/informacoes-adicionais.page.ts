@@ -7,8 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InformacoesAdicionaisPage implements OnInit {
 
-  ocultarDescricao = true;
-
   cardInformacacoes = [
     {
       titulo: 'CO',
@@ -37,5 +35,11 @@ export class InformacoesAdicionaisPage implements OnInit {
   ngOnInit() {
   }
 
+  toggleOcultarTexto(event: any) {
+    let lerMaisElement: any = event.target;
+    let descricaoCardElement: any = event.target.parentElement.children[0];
+    descricaoCardElement.classList.toggle('ocultar-texto');
+    lerMaisElement.textContent = descricaoCardElement.classList.contains('ocultar-texto') ? 'Exibir' : 'Ocultar';
+  }
 
 }

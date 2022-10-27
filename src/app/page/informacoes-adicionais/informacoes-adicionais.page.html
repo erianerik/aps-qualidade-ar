@@ -13,13 +13,18 @@
         </ion-card-header>
 
         <ion-card-content>
-          <p class="card__descricao" [ngClass]="{'ocultar-texto' : ocultarDescricao}">{{ card.descricao }}</p>
-          <span (click)="ocultarDescricao = !ocultarDescricao" class="descricao__ler-mais">{{ocultarDescricao ? 'Exibir' : 'Ocultar'}}</span>
+          <p class="card__descricao ocultar-texto">{{ card.descricao }}</p>
+          <span (click)="toggleOcultarTexto($event)" class="descricao__ler-mais">Exibir</span>
         </ion-card-content>
       </ion-card>
     </div>
 
-    <h3 class="informacoes-fonte padding-1em">Fonte: <a href="https://cetesb.sp.gov.br/ar/poluentes/"
-        target="_blank">CETESB</a></h3>
+    <div class="padding-1em">
+      <h3 class="informacoes-fonte ">Fonte: <a href="https://cetesb.sp.gov.br/ar/poluentes/"
+          target="_blank">CETESB</a></h3>
+
+      <h3 class="informacoes-fonte fonte-api">API By: <a href="https://aqicn.org/city/chiang-mai/"
+          target="_blank">Aqicn</a></h3>
+    </div>
   </div>
 </ion-content>
