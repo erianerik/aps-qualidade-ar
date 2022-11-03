@@ -1,12 +1,21 @@
 <ion-content>
+
+  <header class="cabecalho padding-1em">
+    <h2 class="cabecalho-titulo">Qualidade do ar</h2>
+    <p class="cabecalho-subtitulo">Preencha o nome de uma cidade para obter informações da qualidade do ar</p>
+  </header>
+
   <div class="container">
-    <header class="cabecalho">
-      <input type="text" class="cabecalho-input" placeholder="Digite o nome da sua cidade"
-        (change)="buscarCidade($event)">
+    <header class="cabecalho padding-1em">
+      <ion-searchbar animated="true" class="input" placeholder="Ex.: Campinas" (change)="buscarCidade($event)">
+      </ion-searchbar>
+
 
       <div class="cabecalho__informacoes-fonte" #backgroundColorCabecalho>
         <div class="informacoes-instituto">
-          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal()"> {{ qualidadeAr.nomeInstituto }}</h3>
+          <h3 class="informacoes-fonte__subtitulo-instituto" (click)="exibirNomeModal('Nome instituo', qualidadeAr.nomeInstitutoCompleto)"> {{
+            qualidadeAr.nomeInstituto
+            }}</h3>
           <a class="informacoes-instituto-link" [href]="qualidadeAr.fonte" target="_blank"> Visitar site</a>
         </div>
 
@@ -19,19 +28,28 @@
           <h2 class="informacoes__situacao-qualidade-ar-cidade"> {{ qualidadeAr.cidade }}</h2>
         </div>
       </div>
-
     </header>
 
-    <div class="qualidade-ar__container">
+    <div class="qualidade-ar__container padding-1em">
       <div class="qualidade-ar__informacoes-container">
         <div class="informacoes-container__conteudo">
-          <label class="qualidade-ar__indice-label"> Indice de qualidade de ar </label>
           <h2 class="qualidade-ar__indice qualidade-cor">{{ qualidadeAr.indiceQualidadeAr }}</h2>
+          <label class="qualidade-ar__indice-label"> Indice de qualidade de ar </label>
         </div>
 
-        <div class="informacoes-container__data-atualizacao-container">
-          <label class="qualidade-ar__data-atualizacao-label">Ultima Atualização</label>
-          <span class="qualidade-ar__data-atualizacao">{{ qualidadeAr.dataUltimaAtualizacao }}</span>
+        <div>
+          <ion-button class="qualidade-ar__botao-data-atualizacao" (click)="presentPopover($event)">
+            <ion-icon slot="icon-only" size="small" name="timer-outline"></ion-icon>
+          </ion-button>
+
+          <ion-popover #popover [isOpen]="isOpen" (didDismiss)="isOpen = false">
+            <ng-template>
+              <ion-content class="ion-padding data-atualizacao__content">
+                <label class="data-atualizacao">Ultima Atualização</label>
+                <label class="qualidade-ar__data-atualizacao">{{ qualidadeAr.dataUltimaAtualizacao }}</label>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
         </div>
       </div>
     </div>
@@ -54,4 +72,6 @@
       </div>
     </div>
   </div>
+  
+  <app-loading></app-loading>
 </ion-content>

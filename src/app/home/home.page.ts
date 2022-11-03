@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Particulas } from '../model/particulas';
 import { QualidadeAr } from '../model/qualidade-ar';
-import { QualidadeArServiceService } from './service/qualidade-ar-service/qualidade-ar-service.service';
+import { BroadcastService } from '../service/broadcast/broadcast.service';
+import { QualidadeArServiceService } from '../service/qualidade-ar-service/qualidade-ar-service.service';
 
 @Component({
   selector: 'app-home',
@@ -11,27 +12,42 @@ import { QualidadeArServiceService } from './service/qualidade-ar-service/qualid
 })
 export class HomePage {
   @ViewChild('backgroundColorCabecalho') input;
+  @ViewChild('popover') popover;
 
   qualidadeAr = new QualidadeAr();
   particulas: Particulas[] = [];
   textoQualidadeAr: string = '';
+  cidadeNaoEncontrada = false;
+  isOpen = false;
 
   constructor(
     private _qualidadeArService: QualidadeArServiceService,
     private alertController: AlertController
-  ) { }
+  ) {
+    BroadcastService.qualidadeArSubject.subscribe((qualidadeAr: any) => {
+      this.valorizarQualidadeAr(qualidadeAr);
+    });
+  }
 
   ngOnInit(): void {
     this.buscarCidade('São Paulo');
   }
 
   buscarCidade(event: any | string) {
+    BroadcastService.exibirLoading();
     const cidade = event?.target?.value ? event.target.value : event;
-    this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => this.valorizarQualidadeAr(result.data));
+    this._qualidadeArService.buscarDadosQualidadeAr(cidade).subscribe((result) => {
+      if (result.status === 'error') {
+        setTimeout(() => BroadcastService.ocultarLoading());
+        this.exibirNomeModal('Aviso', 'Cidade não encontrada');
+        return;
+      }
+      this.valorizarQualidadeAr(result.data)
+      BroadcastService.salvarGeolocalizacao(result.data.city.geo[0], result.data.city.geo[1]);
+    });
   }
 
   valorizarQualidadeAr(dadosQualidade: any) {
-    const maximoTamanhoString: number = 15;
     const nomeInstituto: string = dadosQualidade.attributions[0].name;
 
     this.particulas = [];
@@ -40,7 +56,7 @@ export class HomePage {
     this.qualidadeAr.fonte = dadosQualidade.attributions[0].url;
     this.qualidadeAr.indiceQualidadeAr = dadosQualidade.aqi;
     this.qualidadeAr.nomeInstitutoCompleto = nomeInstituto;
-    this.qualidadeAr.nomeInstituto = nomeInstituto.length > maximoTamanhoString ? nomeInstituto.substr(0, maximoTamanhoString).concat('...') : nomeInstituto;
+    this.qualidadeAr.nomeInstituto = nomeInstituto;
     this.qualidadeAr.dataUltimaAtualizacao = dadosQualidade.time.s.split(' ')[1];
     this.qualidadeAr.particulasAr = dadosQualidade.iaqi;
     Object.keys(this.qualidadeAr.particulasAr).forEach((nome) => this.particulas.push({ nome: nome.toUpperCase(), valor: 0 }));
@@ -80,12 +96,18 @@ export class HomePage {
     this.qualidadeAr.situacaoQualidadeAr = textoQualidadeAr;
     this.input.nativeElement.style.backgroundColor = qualidadeArCor;
     setTimeout(() => document.querySelectorAll('.qualidade-cor').forEach((element: any) => element.style.color = qualidadeArCor));
+    setTimeout(() => BroadcastService.ocultarLoading());
   }
 
-  async exibirNomeModal() {
+  presentPopover(e: Event) {
+    this.popover.event = e;
+    this.isOpen = true;
+  }
+
+  async exibirNomeModal(titulo: string, conteudo: string) {
     const modal = await this.alertController.create({
-      header: 'Instituto meteorologista',
-      message: this.qualidadeAr.nomeInstitutoCompleto,
+      header: titulo,
+      message: conteudo,
       buttons: ['fechar'],
     });
 
